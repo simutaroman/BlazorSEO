@@ -1,0 +1,11 @@
+﻿@inject SeoService seoService;
+@inject NavigationManager navManager;
+
+@code {
+   
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        seoService.CurrentUri = navManager.ToBaseRelativePath(navManager.Uri) + " counter";
+    }
+}

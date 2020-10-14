@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+
+@inject NavigationManager manager;
+@inject SeoService seoService;
+
+<title>@currentUri</title>
+@*@Body*@
+
+@code {
+    EditContext editContext;
+    string currentUri = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        seoService.OnChanged += OnSeoChanged;
+        editContext = new EditContext(this);
+        editContext.OnFieldChanged += (sender, args) => StateHasChanged();
+    }
+
+    void OnSeoChanged()
+    {
+        currentUri = seoService.CurrentUri;
+        editContext.NotifyFieldChanged(editContext.Field(nameof(currentUri)));
+    }
+}
